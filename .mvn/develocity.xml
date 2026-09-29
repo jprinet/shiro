@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!-- Common develocity.xml configuration for Maven shared between CI agents and developers building locally.
+
+     The build cache credentials required for CI builds to write to the remote build cache are read from environment variables.
+     Possibly, the credentials are configured in Jenkins via Credentials plugin (https://plugins.jenkins.io/credentials/) and
+     Credentials Binding plugin (https://plugins.jenkins.io/credentials-binding/), or the credentials are injected using the
+     vendor-specific mechanism of the CI server running the build. -->
+
+<develocity
+    xmlns="https://www.gradle.com/develocity-maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.gradle.com/develocity-maven https://www.gradle.com/schema/develocity-maven.xsd">
+  <server>
+    <url>https://develocity.example.ai</url>
+  </server>
+  <buildScan>
+    <backgroundBuildScanUpload>#{env['GITHUB_ACTIONS'] == null}</backgroundBuildScanUpload>
+  </buildScan>
+  <buildCache>
+    <local>
+      <enabled>true</enabled>
+    </local>
+    <remote>
+      <enabled>true</enabled>
+      <storeEnabled>#{env['GITHUB_ACTIONS'] != null and env['DEVELOCITY_ACCESS_KEY'] != null and env['DEVELOCITY_ACCESS_KEY'] != ''}</storeEnabled>
+    </remote>
+  </buildCache>
+</develocity>

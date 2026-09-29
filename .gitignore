@@ -53,3 +53,8 @@ pom.xml.*
 -
 .sdkmanrc
 .DS_Store
+
+#
+# Develocity workspace id, generated per checkout
+#
+.mvn/.develocity/
